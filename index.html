@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expo Registration</title>
+<style>
+/* 1. Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. BODY - BACKGROUND CHANGE */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0d1a2f; 
+    background-image:radial-gradient(circle at center, rgba(33, 150, 243, 0.1) 1px, transparent 1px),
+                      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px, 50px 50px, 50px 50px;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+    min-height: 100vh;
+}
+
+/* 3. CONTAINER - FORM BOX */
+.container {
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(5px); 
+    padding: 30px 40px;
+    border-radius: 10px;
+    border: 1px solid #00f2fe; /* Neon Blue Border */
+    box-shadow: 
+        0 0 15px rgba(0, 242, 254, 0.6), /* Inner glow */
+        0 0 30px rgba(0, 242, 254, 0.3); /* Outer glow */
+    
+    width: 90%;
+    max-width: 500px;
+    color: #f0f0f0; 
+}
+
+/* 4. HEADINGS */
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #00f2fe; /* Neon Blue color */
+    text-shadow: 0 0 5px rgba(0, 242, 254, 0.8);
+}
+
+h4 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #00f2fe; /* Neon Blue color */
+    text-shadow: 0 0 5px rgba(0, 242, 254, 0.8);
+}
+.subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #b0b0b0; /* Light grey subtitle */
+}
+
+/* 5. LABELS */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #00f2fe; /* Neon Blue label color */
+}
+
+/* 6. INPUTS & SELECTS */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1); /* Slightly transparent input */
+    color: #ffffff; /* Text color inside input */
+    border: 1px solid #00f2fe;
+    border-radius: 6px;
+    font-size: 16px;
+}
+input::placeholder {
+    color: #aaa; /* Placeholder text color */
+}
+select option {
+    background: #0d1a2f; /* Dropdown options background */
+    color: #ffffff;
+}
+select {
+    appearance: none; /* Remove default dropdown arrow (optional) */
+}
+
+/* 7. PHONE WRAPPER */
+.phone-wrapper {
+    display: flex;
+    margin-bottom: 15px;
+}
+.country-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #00f2fe; /* Neon code background */
+    color: #0d1a2f; /* Dark text */
+    font-weight: bold;
+    padding: 0 12px;
+    border: 1px solid #00f2fe;
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    min-width: 60px;
+    height: 44px;
+}
+#phone {
+    flex: 1;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid #00f2fe;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    height: 44px;
+}
+
+/* 8. ERROR */
+.error {
+    color: #ff5757; /* Red color for error */
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* 9. BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: #00f2fe; /* Neon button color */
+    color: #0d1a2f; /* Dark text on button */
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+button:hover {
+    background: #4efdff; /* Lighter neon on hover */
+    box-shadow: 0 0 10px #00f2fe;
+}
+
+/* 10. MESSAGES */
+.hidden {
+    display: none;
+}
+#successMsg {
+    margin-top: 15px;
+    color: #39ff14; /* Neon Green for success */
+    font-weight: bold;
+    text-align: center;
+}
+#regNoDisplay {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2> SCIENCE , ROBO & FUN EXPO </h2>
+<h4>VISITOR REGISTRATION FORM</h4>
+<p class="subtitle">Please fill your details</p>
+<form id="registrationForm">
+    <label for="role">Select Role</label>
+    <select id="role" required>
+        <option value="">-- Select --</option>
+        <option value="Student">Student</option>
+        <option value="Parent">Parent</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <div id="studentFields" class="hidden">
+        <label for="board">Select Board</label>
+        <select id="board">
+            <option value="">-- Select Board --</option>
+            <option value="GSEB">GSEB</option>
+            <option value="CBSE">CBSE</option>
+        </select>
+
+        <label for="standard">Select Standard</label>
+        <select id="standard">
+            <option value="">-- Select Standard --</option>
+        </select>
+    </div>
+
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="Enter full name" required>
+
+    <label for="noOfPersons">No of Persons</label>
+    <input type="number" id="noOfPersons" min="1" value="1" required>
+
+    <label for="phone">Mobile Number</label>
+    <div class="phone-wrapper">
+        <div class="country-code">+91</div>
+        <input type="text" id="phone" placeholder="123-456-7890" maxlength="12" inputmode="numeric" required>
+    </div>
+    <div id="phoneError" class="error hidden">Please enter valid 10-digit number.</div>
+
+    <button type="submit">📋 Register</button>
+</form>
+<div id="successMsg" class="hidden">✅ Registration successful!</div>
+
+<div id="regNoDisplay" class="hidden">
+    Your Registration Number: <span id="regNo"></span>
+</div>
+
+<script>
+const roleSelect = document.getElementById('role');
+const studentFields = document.getElementById('studentFields');
+const boardSelect = document.getElementById('board');
+const standardSelect = document.getElementById('standard');
+const phoneInput = document.getElementById('phone');
+const phoneError = document.getElementById('phoneError');
+// *** કૃપા કરીને આ URL ને તમારા Apps Script ના નવા URL સાથે બદલો ***
+const appsScriptUrl = "https://script.google.com/macros/s/AKfycbwPbJ060NySaL5ZLuyCasJJY29cuHYKa09bU4jDDa1x6LVpMOlJuY_-KUPqDKM_tOaU/exec"; 
+
+roleSelect.addEventListener('change', function() {
+    if (this.value === 'Student') studentFields.classList.remove('hidden');
+    else {
+        studentFields.classList.add('hidden');
+        boardSelect.value = '';
+        standardSelect.innerHTML = '<option value="">-- Select Standard --</option>';
+    }
+});
+
+boardSelect.addEventListener('change', function(){
+    const stdOptions=[
+        'Std 1','Std 2','Std 3','Std 4','Std 5','Std 6','Std 7','Std 8',
+        'Std 9','Std 10','Std 11 Science','Std 11 Commerce',
+        'Std 12 Science','Std 12 Commerce'
+    ];
+    standardSelect.innerHTML = '<option value="">-- Select Standard --</option>';
+    stdOptions.forEach(std => {
+        const opt=document.createElement('option');
+        opt.value=std; opt.textContent=std;
+        standardSelect.appendChild(opt);
+    });
+});
+
+phoneInput.addEventListener('input', function() {
+    let value=this.value.replace(/\D/g,'');
+    if(value.length>10) value=value.slice(0,10);
+    if(value.length>6) value=value.replace(/(\d{3})(\d{3})(\d{1,4})/, '$1-$2-$3');
+    else if(value.length>3) value=value.replace(/(\d{3})(\d{1,3})/, '$1-$2');
+    this.value=value;
+});
+
+// **** Submission Code (Address field removed from entry object) ****
+document.getElementById('registrationForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const role=roleSelect.value;
+    const board=boardSelect.value;
+    const standard=standardSelect.value;
+    const name=document.getElementById('name').value.trim();
+    const noOfPersons=document.getElementById('noOfPersons').value;
+    const phoneFormatted=phoneInput.value.trim();
+    const phoneDigits=phoneFormatted.replace(/\D/g,'');
+
+    if(phoneDigits.length !== 10){
+        phoneError.classList.remove('hidden');
+        return;
+    } else phoneError.classList.add('hidden');
+
+    const entry={
+        role,
+        board: role==='Student'?board:'-',
+        standard: role==='Student'?standard:'-',
+        name,
+        noOfPersons,
+        // *** address property is intentionally excluded here ***
+        phone:'+91'+phoneDigits
+    };
+
+    // Encode the data as JSON and include it in the URL
+    const urlWithData = appsScriptUrl + "?data=" + encodeURIComponent(JSON.stringify(entry));
+
+    // Send a GET request
+    fetch(urlWithData, {
+        method:"GET" // Using GET instead of POST
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.result === 'success'){
+            document.getElementById('successMsg').classList.remove('hidden');
+            document.getElementById('regNoDisplay').classList.remove('hidden');
+            document.getElementById('regNo').textContent = data.regNo;
+
+            setTimeout(() => {
+                document.getElementById('successMsg').classList.add('hidden');
+                document.getElementById('regNoDisplay').classList.add('hidden');
+            }, 5000);
+
+            document.getElementById('registrationForm').reset();
+            
+            const sf = document.getElementById('studentFields');
+            if (sf) {
+                sf.classList.add('hidden');
+            }
+            
+            phoneInput.value = '';
+        } else {
+            alert("❌ Submission failed: " + data.message);
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("❌ Submission failed: " + err.message);
+    });
+});
+</script>
+</body>
+</html>
